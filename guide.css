@@ -4,10 +4,10 @@
   --grl-cream: var(--cream, #f5eddd);
   --grl-paper: var(--paper, #fffaf0);
   --grl-pink: var(--pink, #ee2a88);
-  --grl-red: var(--red, #f04436);
+  --grl-red: var(--red, #a83230);
   --grl-purple: var(--purple, #7d48d7);
   --grl-orange: var(--orange, #f77f19);
-  --grl-green: #1e9b67;
+  --grl-green: #14613e;
   --grl-line: color-mix(in srgb, var(--grl-ink) 22%, transparent);
 }
 
@@ -31,7 +31,7 @@
 }
 
 .grl-page a:hover {
-  color: var(--grl-pink);
+  color: #8e1748;
 }
 
 .grl-page :focus-visible {
@@ -326,7 +326,7 @@
 }
 
 .grl-local-label {
-  color: var(--grl-orange);
+  color: #8b4005;
 }
 
 .grl-check-label {
@@ -363,7 +363,7 @@
 .grl-guide-cta {
   align-items: end;
   background: var(--grl-pink);
-  color: #fff;
+  color: var(--grl-ink);
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr auto;
@@ -941,4 +941,30 @@
   .grl-event-row {
     transition: none;
   }
+}
+
+.grl-guide-cta .grl-eyebrow {
+  color: var(--grl-ink);
+}
+.grl-show-poster h1 {
+  overflow-wrap: anywhere;
+}
+
+.grl-show-poster .grl-eyebrow,
+.grl-show-poster .grl-source-link,
+.grl-show-poster .grl-source-count {
+  color: var(--grl-cream);
+}
+.grl-show-poster .grl-source-label {
+  color: #8fe1b9;
+}
+.grl-show-poster .grl-check-label,
+.grl-show-poster .grl-local-label {
+  color: #ffb68e;
+}
+.grl-show-poster .grl-concept-label {
+  color: #d8baff;
+}
+.grl-source-link {
+  font-size: 0.8125rem;
 }

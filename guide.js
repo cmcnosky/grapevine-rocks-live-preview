@@ -350,6 +350,8 @@
         genres: "Nineties • Alternative",
         summary:
           "Tolbert’s identifies The Alternatives as a nineties and alternative act.",
+        sourceNote:
+          "GRL rounds the end time to midnight. Tolbert’s lists 11:59 PM, the time shown here.",
         sources: [GRL_WEEKEND_SOURCE, TOLBERTS_SOURCE],
       }),
       publishedEvent({
@@ -469,6 +471,8 @@
         genres: "Women of rock tribute",
         summary:
           "Tolbert’s describes Cherry Bomb as a tribute to the women of rock.",
+        sourceNote:
+          "GRL rounds the end time to midnight. Tolbert’s lists 11:59 PM, the time shown here.",
         sources: [GRL_WEEKEND_SOURCE, TOLBERTS_SOURCE],
       }),
       publishedEvent({
@@ -749,14 +753,28 @@
       : [];
   }
 
-  function listingStatus(event) {
+  function listingStatus(event, detail = false) {
     const sources = eventSources(event);
     if (!event.concept && sources.length) {
       const needsCheck = /recheck|differ/i.test(event.sourceStatus || "");
-      return `<span class="${needsCheck ? "grl-check-label" : "grl-source-label"}">${escapeHTML(event.sourceStatus || "Published listing")}</span><a class="grl-source-link" href="${escapeHTML(sources[0].url)}" target="_blank" rel="noreferrer">${sources.length > 1 ? `${sources.length} sources` : "Source"}</a>`;
+      const sourceControl =
+        sources.length > 1
+          ? detail
+            ? '<span class="grl-source-count">' +
+              sources.length +
+              " sources below</span>"
+            : '<a class="grl-source-link" href="#show/' +
+              encodeURIComponent(event.id) +
+              '">' +
+              sources.length +
+              " sources</a>"
+          : '<a class="grl-source-link" href="' +
+            escapeHTML(sources[0].url) +
+            '" target="_blank" rel="noreferrer">Source</a>';
+      return `<span class="${needsCheck ? "grl-check-label" : "grl-source-label"}">${escapeHTML(event.sourceStatus || "Published listing")}</span>${sourceControl}`;
     }
     if (event.localEdited) {
-      return `<span class="grl-local-label">Local edit</span>${sources.length ? `<a class="grl-source-link" href="${escapeHTML(sources[0].url)}" target="_blank" rel="noreferrer">Original ${sources.length > 1 ? "sources" : "source"}</a>` : ""}`;
+      return `<span class="grl-local-label">Local edit</span>${sources.length ? `<a class="grl-source-link" href="${escapeHTML(sources[0].url)}" target="_blank" rel="noreferrer">Original source</a>` : ""}`;
     }
     return '<span class="grl-concept-label">Local demo</span>';
   }
@@ -979,7 +997,7 @@
         <div class="grl-show-poster">
           <div class="grl-show-date-block"><span>${escapeHTML(formatDate(event.date).split(",")[0])}</span><strong>${escapeHTML(new Date(`${event.date}T12:00:00`).getDate())}</strong><span>${escapeHTML(new Date(`${event.date}T12:00:00`).toLocaleString("en-US", { month: "short" }))}</span></div>
           <div>
-            <p class="grl-eyebrow">${listingStatus(event)} ${escapeHTML(event.genres)}</p>
+            <p class="grl-eyebrow">${listingStatus(event, true)} ${escapeHTML(event.genres)}</p>
             <h1 id="show-title">${escapeHTML(event.title)}</h1>
             ${event.artist !== event.title ? `<p class="grl-show-artist">${escapeHTML(event.artist)}</p>` : ""}
           </div>
@@ -1599,7 +1617,7 @@
     document.title = `${main.querySelector("h1")?.textContent || "Grapevine Rocks Live"} | GRL Concept`;
     const heading = main.querySelector("h1");
     if (heading) heading.tabIndex = -1;
-    requestAnimationFrame(() => heading?.focus({ preventScroll: true }));
+    heading?.focus({ preventScroll: true });
     return true;
   }
 

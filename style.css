@@ -1085,3 +1085,15 @@ main:focus {
     width: 90%;
   }
 }
+
+@media (max-width: 370px) {
+  .wordmark {
+    display: none;
+  }
+  .menu-toggle {
+    flex-shrink: 0;
+  }
+  .mast-inner {
+    gap: 0.5rem;
+  }
+}
